@@ -11,8 +11,8 @@
   "files": {
     "index.js": "54c37cafc680da6967edceca35a41aab0942b77f8122af407c8acbf5d17debd4",
     "module.json": "ff5263c2cc3a5fc5bcc6da9beae0636b6eb10f328c8a0f97ad9705bbc06b69fb",
-    "mount.json": {"overwrite": false, "hash": "3a1dfb05d7257530e6349233688c3e121945c5de50f1273a7620537755d61e45",}
-    "mountlist.json": {"overwrite": false, "hash": "c78d653b0958c401cbecb4912468dd2bcde51edd65c974af0c6fe40d499b4c21",}
+    "mount.json": {"overwrite": false, "hash": "3a1dfb05d7257530e6349233688c3e121945c5de50f1273a7620537755d61e45"},
+    "mountlist.json": {"overwrite": false, "hash": "c78d653b0958c401cbecb4912468dd2bcde51edd65c974af0c6fe40d499b4c21"},
     "README.md": "b0513df06bfebd830eeab0bf8259235c126c544e73a90001ce623679cc314155"
   }
 }
