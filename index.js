@@ -41,7 +41,7 @@ let msi = false;
 c.add('msi', () => {
 msi = !msi
 c.message(`msi is now ${msi ? 'enabled' : 'disabled'}.`);
-dispatch.hook('C_START_SKILL', 4, e => {
+dispatch.hook('C_START_SKILL', 5, e => {
 if(!msi) return
 console.log(e.skill + ",")
 });
@@ -50,8 +50,8 @@ console.log(e.skill + ",")
 //hook checklist
 dispatch.hook('S_LOGIN', 10, (event) => {cid = event.gameId})
 dispatch.hook('S_USER_STATUS', 1, event => { if(event.target.equals(cid)){if(event.status == 1){inCombat = true}else inCombat = false}})
-dispatch.hook('S_MOUNT_VEHICLE', 1, event => { if(event.target.equals(cid)) onMount = true })
-dispatch.hook('S_UNMOUNT_VEHICLE', 1, event => { if(event.target.equals(cid)) onMount = false })
+dispatch.hook('S_MOUNT_VEHICLE', 2, event => { if(event.target.equals(cid)) onMount = true })
+dispatch.hook('S_UNMOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = false })
 
 //main toggle command
 c.add('mptoggle', () => {
@@ -73,7 +73,7 @@ unk3: 0
 })
 
 //cStartSkill hook instant mount function
-dispatch.hook('C_START_SKILL', 4, (event) => {
+dispatch.hook('C_START_SKILL', 5, (event) => {
 if(!enabled || inCombat || !mounts.includes(event.skill) || customMount < 1 || customMount > 275) return
 dispatch.toClient('S_MOUNT_VEHICLE', 2, {
 gameId: cid,
@@ -84,7 +84,7 @@ unk: false
 })
 
 //cStartSkill hook instant unmount function
-dispatch.hook('C_START_SKILL', 4, (event) => {
+dispatch.hook('C_START_SKILL', 5, (event) => {
 if(!enabled || !onMount || event.skill === 132108866) return;
 else if(event.skill === 132108865 || mounts.includes(event.skill)){
 dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
