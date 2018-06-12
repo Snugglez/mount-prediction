@@ -39,7 +39,7 @@ fs.writeFileSync(path.join(__dirname, 'mount.json'), JSON.stringify(customMount)
 //skill id logger
 let msi = false;	
 c.add('msi', () => {
-fsi = !fsi
+msi = !msi
 c.message(`msi is now ${msi ? 'enabled' : 'disabled'}.`);
 dispatch.hook('C_START_SKILL', 4, e => {
 if(!msi) return
