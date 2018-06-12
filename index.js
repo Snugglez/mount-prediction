@@ -50,7 +50,7 @@ console.log(e.skill + ",")
 //hook checklist
 dispatch.hook('S_LOGIN', 10, (event) => {cid = event.gameId})
 dispatch.hook('S_USER_STATUS', 1, event => { if(event.target.equals(cid)){if(event.status == 1){inCombat = true}else inCombat = false}})
-dispatch.hook('S_MOUNT_VEHICLE', 2, event => { if(event.target.equals(cid)) onMount = true })
+dispatch.hook('S_MOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = true })
 dispatch.hook('S_UNMOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = false })
 
 //main toggle command
@@ -102,7 +102,7 @@ unk3: 0
 
 //sSystemMessage to instantly unmount in unmountable zones
 dispatch.hook('S_SYSTEM_MESSAGE', 1, (event) => {
-if(event.message.includes('@1007') || event.message.includes('@36'))
+if(event.message.includes('@1007') || event.message.includes('@36') || event.message.includes('@3880'))
 dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
 gameId: cid,
 skill: 12200016
