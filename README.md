@@ -23,7 +23,7 @@ once I stop being lazy, I want to make commands to be like, `mp on/off/set/log`
 https://docs.google.com/spreadsheets/d/1ThLlpatnxwenbxnQiTOtxjoYqGVEulWdWE5nrKA_-6U/edit?usp=sharing
 
 # Warning
-Use flying mounts with flying mounts and ground mounts with ground mounts, otherwise it might cause people seeing you teleport around if flying while using ground mount or being stuck mounted if using a ground mount with a flying mount.
+DO NOT ATTEMPT TO FLY WHEN USING A GROUND MOUNT SERVER SIDE, YOU WILL TELEPORT
 
 # Known bugs:
 Sometimes mounting right after combat can use your actual mount instead of the one set by `setmount`
