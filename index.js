@@ -9,7 +9,8 @@ let enabled = true,
 	inCombat = null,
 	onMount = null,
 	customMount = 0,
-	mounts = require('./mountlist.json')
+	mounts = require('./mountlist.json'),
+	grounds = require('./groundlist.json')
 
 //custom mount copy/paste fiesta 
 const INVALID = [
@@ -47,6 +48,9 @@ console.log(e.skill + ",")
 });
 });
 
+//easy fix when setting your mount to a ground mount when using a flying mount server side
+dispatch.hook('S_SHORTCUT_CHANGE', 1, {order: -99999, filter: {fake: false}}, (event) => {if(enabled) {return false;}});
+
 //hook checklist
 dispatch.hook('S_LOGIN', 10, (event) => {cid = event.gameId})
 dispatch.hook('S_USER_STATUS', 1, event => { if(event.target.equals(cid)){if(event.status == 1){inCombat = true}else inCombat = false}})
@@ -72,14 +76,35 @@ unk3: 0
 })
 })
 
-//cStartSkill hook instant mount function
+//cStartSkill hook instant mount function for flying mounts
 dispatch.hook('C_START_SKILL', 5, (event) => {
-if(!enabled || inCombat || !mounts.includes(event.skill) || customMount < 1 || customMount > 275) return
+if(!enabled || inCombat || !mounts.includes(event.skill) || customMount < 1 || customMount > 275 || grounds.includes(customMount)) return
 dispatch.toClient('S_MOUNT_VEHICLE', 2, {
 gameId: cid,
 id: customMount,
 skill: 12200016,
 unk: false
+})
+dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+unk1: 7031,
+unk2: 300001,
+unk3: 1
+})
+})
+
+//cStartSkill hook instant mount function for ground mounts
+dispatch.hook('C_START_SKILL', 5, (event) => {
+if(!enabled || inCombat || !mounts.includes(event.skill) || customMount < 1 || customMount > 275 || !grounds.includes(customMount)) return
+dispatch.toClient('S_MOUNT_VEHICLE', 2, {
+gameId: cid,
+id: customMount,
+skill: 12200016,
+unk: false
+})
+dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+unk1: 7031,
+unk2: 300001,
+unk3: 0
 })
 })
 
