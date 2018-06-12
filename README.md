@@ -23,8 +23,5 @@ https://docs.google.com/spreadsheets/d/1ThLlpatnxwenbxnQiTOtxjoYqGVEulWdWE5nrKA_
 Use flying mounts with flying mounts and ground mounts with ground mounts, otherwise it might cause people seeing you teleport around if flying while using ground mount or being stuck mounted if using a ground mount with a flying mount.
 
 # Known bugs:
-Using a non-flying mount as your mount id while using a flying mount as your real mount will make it impossible to unmount  (possible to fix, I'm just too retarded for it)
-temp fix: use `unmount` and change your mount id or use a land mount while using that mount id
-
 Sometimes mounting right after combat can use your actual mount instead of the one set by `setmount`
 this seems to happen cause the server lets the client mount as soon as the server sees it out of combat and before the client sees its self as out of combat
