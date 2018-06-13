@@ -110,15 +110,32 @@ unk3: 0
 
 //cStartSkill hook instant unmount function
 dispatch.hook('C_START_SKILL', 5, (event) => {
+if(!enabled || !onMount || event.skill === 132108866 || event.skill === 132108865) return;
+else if(mounts.includes(event.skill)){
+
+dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
+gameId: cid,
+skill: 12200016
+})
+
+dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+unk1: 7031,
+unk2: 300001,
+unk3: 0
+})
+}
+})
+
+//cStartSkill hook for flying mount dismount
+dispatch.hook('C_START_SKILL', 5, (event) => {
 if(!enabled || !onMount || event.skill === 132108866) return;
-else if(event.skill === 132108865 || mounts.includes(event.skill)){
+else if(event.skill === 132108865){
 dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
 })
 dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
 gameId: cid,
 skill: 12200016
 })
-
 dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
 unk1: 7031,
 unk2: 300001,
