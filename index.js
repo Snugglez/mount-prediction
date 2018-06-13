@@ -112,6 +112,8 @@ unk3: 0
 dispatch.hook('C_START_SKILL', 5, (event) => {
 if(!enabled || !onMount || event.skill === 132108866) return;
 else if(event.skill === 132108865 || mounts.includes(event.skill)){
+dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
+})
 dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
 gameId: cid,
 skill: 12200016
