@@ -48,8 +48,8 @@ console.log(e.skill + ",")
 });
 });
 
-//easy fix when setting your mount to a ground mount when using a flying mount server side
-dispatch.hook('S_SHORTCUT_CHANGE', 1, {order: -99999, filter: {fake: false}}, (event) => {if(enabled) {return false;}});
+//easy fix when setting your mount to a ground mount when using a flying mount server side (broken...)
+//dispatch.hook('S_SHORTCUT_CHANGE', 1, {order: -99999, filter: {fake: false}}, (event) => {if(enabled) {return false;}});
 
 //hook checklist
 dispatch.hook('S_LOGIN', 10, (event) => {cid = event.gameId})
@@ -73,6 +73,8 @@ dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
 unk1: 7031,
 unk2: 300001,
 unk3: 0
+})
+dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
 })
 })
 
@@ -101,10 +103,9 @@ id: customMount,
 skill: 12200016,
 unk: false
 })
-dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
-unk1: 7031,
-unk2: 300001,
-unk3: 0
+dispatch.hookOnce('S_SHORTCUT_CHANGE', 1, (event) => {
+event.unk3 = 0
+return true
 })
 })
 
@@ -142,6 +143,17 @@ unk2: 300001,
 unk3: 0
 })
 }
+})
+
+
+//fix for teleporting while on a flying mount
+dispatch.hook('S_UNMOUNT_VEHICLE', 2, (event) => {
+if(!enabled) return
+dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+unk1: 7031,
+unk2: 300001,
+unk3: 0
+})
 })
 
 //sSystemMessage to instantly unmount in unmountable zones
