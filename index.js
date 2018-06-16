@@ -12,58 +12,27 @@ let enabled = true,
 	mounts = require('./mountlist.json'),
 	grounds = require('./groundlist.json')
 
-//custom mount copy/paste fiesta 
-const INVALID = [
-4,100,105,106,107,108,109,110,111,112,
-113,114,115,116,117,118,119,120,121,122,
-123,124,125,126,127,128,129,130,131,132,
-133,134,135,136,137,138,139,140,141,142,
-143,144,145,146,147,148,149
-];
-try {
-customMount = require('./mount.json')}
-catch(e) {}
-c.add('setmount', (mount) => {
-customMount = parseInt(mount);
+//commands o' plenty
+c.add("mp", (option, value) => {
+switch (option) {
+case "on":
+enabled = true
+c.message(`mount prediction is now ${enabled ? 'enabled' : 'disabled'}.`)
+break;
+case "off":
+enabled = false
+c.message(`mount prediction is now ${enabled ? 'enabled' : 'disabled'}.`)
+break;
+case "set":
+customMount = parseInt(value);
 for (i = 0; i < INVALID.length; i++) {
 if(INVALID[i] == customMount){
 c.message('The value: '+customMount+' is invalid, try another.');
-customMount = 0;
-}}
-c.message('Mount set to: '+mount+'.');
+customMount = 0;}}
+c.message('Mount set to: '+value+'.');
 saveMount()
-})
-function saveMount() {
-fs.writeFileSync(path.join(__dirname, 'mount.json'), JSON.stringify(customMount))
-}
-
-//skill id logger
-let msi = false;	
-c.add('msi', () => {
-msi = !msi
-c.message(`msi is now ${msi ? 'enabled' : 'disabled'}.`);
-dispatch.hook('C_START_SKILL', 5, e => {
-if(!msi) return
-console.log(e.skill + ",")
-});
-});
-
-//easy fix when setting your mount to a ground mount when using a flying mount server side (broken...)
-//dispatch.hook('S_SHORTCUT_CHANGE', 1, {order: -99999, filter: {fake: false}}, (event) => {if(enabled) {return false;}});
-
-//hook checklist
-dispatch.hook('S_LOGIN', 10, (event) => {cid = event.gameId})
-dispatch.hook('S_USER_STATUS', 1, event => { if(event.target.equals(cid)){if(event.status == 1){inCombat = true}else inCombat = false}})
-dispatch.hook('S_MOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = true })
-dispatch.hook('S_UNMOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = false })
-
-//main toggle command
-c.add('mptoggle', () => {
-enabled = !enabled
-c.message(`mount prediction is now ${enabled ? 'enabled' : 'disabled'}.`)})
-
-//dismount command incase stuck
-c.add('unmount', () => {
+break;
+case "unmount":
 c.message(`Kill Switch Used`)
 dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
 gameId: cid,
@@ -76,11 +45,33 @@ unk3: 0
 })
 dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
 })
-})
+break;
+}})
+	
+//custom mount copy/paste fiesta 
+const INVALID = [
+4,100,105,106,107,108,109,110,111,112,
+113,114,115,116,117,118,119,120,121,122,
+123,124,125,126,127,128,129,130,131,132,
+133,134,135,136,137,138,139,140,141,142,
+143,144,145,146,147,148,149
+];
+try {
+customMount = require('./mount.json')}
+catch(e) {}
+function saveMount() {
+fs.writeFileSync(path.join(__dirname, 'mount.json'), JSON.stringify(customMount))
+}
+
+//hook checklist
+dispatch.hook('S_LOGIN', 10, (event) => {cid = event.gameId})
+dispatch.hook('S_USER_STATUS', 1, event => { if(event.target.equals(cid)){if(event.status == 1){inCombat = true}else inCombat = false}})
+dispatch.hook('S_MOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = true })
+dispatch.hook('S_UNMOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = false })
 
 //cStartSkill hook instant mount function for flying mounts
-dispatch.hook('C_START_SKILL', 5, (event) => {
-if(!enabled || inCombat || !mounts.includes(event.skill) || customMount < 1 || customMount > 275 || grounds.includes(customMount)) return
+dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
+if(!enabled || inCombat || !mounts.includes(event.skill.id) || customMount < 1 || customMount > 275 || grounds.includes(customMount)) return
 dispatch.toClient('S_MOUNT_VEHICLE', 2, {
 gameId: cid,
 id: customMount,
@@ -95,8 +86,8 @@ unk3: 1
 })
 
 //cStartSkill hook instant mount function for ground mounts
-dispatch.hook('C_START_SKILL', 5, (event) => {
-if(!enabled || inCombat || !mounts.includes(event.skill) || customMount < 1 || customMount > 275 || !grounds.includes(customMount)) return
+dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
+if(!enabled || inCombat || !mounts.includes(event.skill.id) || customMount < 1 || customMount > 275 || !grounds.includes(customMount)) return
 dispatch.toClient('S_MOUNT_VEHICLE', 2, {
 gameId: cid,
 id: customMount,
@@ -110,9 +101,9 @@ return true
 })
 
 //cStartSkill hook instant unmount function
-dispatch.hook('C_START_SKILL', 5, (event) => {
-if(!enabled || !onMount || event.skill === 132108866 || event.skill === 132108865) return;
-else if(mounts.includes(event.skill)){
+dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
+if(!enabled || !onMount || event.skill.id === 65000002 || event.skill.id === 65000001) return;
+else if(mounts.includes(event.skill.id)){
 
 dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
 gameId: cid,
@@ -128,9 +119,9 @@ unk3: 0
 })
 
 //cStartSkill hook for flying mount dismount
-dispatch.hook('C_START_SKILL', 5, (event) => {
-if(!enabled || !onMount || event.skill === 132108866) return;
-else if(event.skill === 132108865){
+dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
+if(!enabled || !onMount || event.skill.id === 65000002) return;
+else if(event.skill.id === 65000001){
 dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
 })
 dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
@@ -145,6 +136,16 @@ unk3: 0
 }
 })
 
+//instant C...
+dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
+if(!enabled) return
+else if(event.skill.id === 65000002){
+dispatch.toClient('S_START_CLIENT_CUSTOM_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 3 : 2, {
+skill: 65000002
+})
+dispatch.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 3 : 2, (event) => {return false})
+}
+})
 
 //fix for teleporting while on a flying mount
 dispatch.hook('S_UNMOUNT_VEHICLE', 2, (event) => {

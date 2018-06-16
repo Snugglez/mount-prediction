@@ -1,19 +1,20 @@
 {
 "defs": {
 "S_LOGIN": 10,
-"C_START_SKILL": 5,
+"C_START_SKILL": [6, 7],
 "S_USER_STATUS": 1,
 "S_MOUNT_VEHICLE": 2,
 "S_SYSTEM_MESSAGE": 1,
 "S_UNMOUNT_VEHICLE": 2,
-"S_SHORTCUT_CHANGE": 1
+"S_SHORTCUT_CHANGE": 1,
+"S_START_CLIENT_CUSTOM_SKILL": [2, 3]
 },
   "files": {
     "groundlist.json": "7c542198c33cbd8db39c67aaa7789f420cfbc92ee1e7a0115897241a8ad14a18",
-    "index.js": "829be939ab0d851403ef041ade66e0eda3aa64ce5a4a626de839db6a33a9225d",
+    "index.js": "2d4d6cf6d7b38e424542dbf5e57cbe6743351f579083a12352ee0e5ab295b638",
     "module.json": "ff5263c2cc3a5fc5bcc6da9beae0636b6eb10f328c8a0f97ad9705bbc06b69fb",
     "mount.json": {"overwrite": false, "hash": "e888a676e1926d0c08b5f11fb9116df58b62604b05846f39f8d6fc4dd0ba31f1"},
-    "mountlist.json": {"overwrite": false, "hash": "c78d653b0958c401cbecb4912468dd2bcde51edd65c974af0c6fe40d499b4c21"},
-    "README.md": "f7d00b603bb64939608247d8d66bd984dc46922ac67518542e3ddef37b299633"
+    "mountlist.json": "3059b66d6d8e15557b5ad01acb2144bbb21aae0d97a6340ab91e4957d5185053",
+    "README.md": "42197c9b1139c6d99a3f1a13d952888547b3323e1587ef10138605a3c66e6ac3"
   }
 }
