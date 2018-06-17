@@ -39,9 +39,9 @@ gameId: cid,
 skill: 12200016
 })
 dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
-unk1: 7031,
-unk2: 300001,
-unk3: 0
+huntingZoneId: 7031,
+id: 300001,
+enable: false
 })
 dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
 })
@@ -79,9 +79,9 @@ skill: 12200016,
 unk: false
 })
 dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
-unk1: 7031,
-unk2: 300001,
-unk3: 1
+huntingZoneId: 7031,
+id: 300001,
+enable: true
 })
 })
 
@@ -95,7 +95,7 @@ skill: 12200016,
 unk: false
 })
 dispatch.hookOnce('S_SHORTCUT_CHANGE', 1, (event) => {
-event.unk3 = 0
+event.enable = false
 return true
 })
 })
@@ -111,9 +111,9 @@ skill: 12200016
 })
 
 dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
-unk1: 7031,
-unk2: 300001,
-unk3: 0
+huntingZoneId: 7031,
+id: 300001,
+enable: false
 })
 }
 })
@@ -129,9 +129,9 @@ gameId: cid,
 skill: 12200016
 })
 dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
-unk1: 7031,
-unk2: 300001,
-unk3: 0
+huntingZoneId: 7031,
+id: 300001,
+enable: false
 })
 }
 })
@@ -147,14 +147,16 @@ dispatch.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (dispatch.base.majorPatchVersio
 }
 })
 
-//fix for teleporting while on a flying mount
+//fix for teleporting while on a flying mount (im retarded and forgot a gameId check...)
 dispatch.hook('S_UNMOUNT_VEHICLE', 2, (event) => {
 if(!enabled) return
+else if(event.gameId.equals(cid)){
 dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
-unk1: 7031,
-unk2: 300001,
-unk3: 0
+huntingZoneId: 7031,
+id: 300001,
+enable: false
 })
+}
 })
 
 //sSystemMessage to instantly unmount in unmountable zones
