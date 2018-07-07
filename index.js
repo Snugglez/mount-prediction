@@ -1,12 +1,13 @@
-const Command = require('command'),
+const 	Command = require('command'),
+		GameState = require('tera-game-state'),
 		path = require('path'),
 		fs = require('fs')
-module.exports = function mountpredict(dispatch) {
-const c = Command(dispatch)
+module.exports = function mountpredict(d) {
+const 	c = Command(d),
+		g = GameState(d);
+g.initialize(["me", "contract"]);
 
 let enabled = true,
-	cid = null,
-	inCombat = null,
 	onMount = null,
 	customMount = 0,
 	mounts = require('./mountlist.json'),
@@ -34,16 +35,16 @@ saveMount()
 break;
 case "unmount":
 c.message(`Kill Switch Used`)
-dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
-gameId: cid,
+d.send('S_UNMOUNT_VEHICLE', 2, {
+gameId: g.me.gameId,
 skill: 12200016
 })
-dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+d.send('S_SHORTCUT_CHANGE', 1, {
 huntingZoneId: 7031,
 id: 300001,
 enable: false
 })
-dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
+d.send('C_UNMOUNT_VEHICLE', 1, {
 })
 break;
 }})
@@ -63,22 +64,16 @@ function saveMount() {
 fs.writeFileSync(path.join(__dirname, 'mount.json'), JSON.stringify(customMount))
 }
 
-//hook checklist
-dispatch.hook('S_LOGIN', 10, (event) => {cid = event.gameId})
-dispatch.hook('S_USER_STATUS', 1, event => { if(event.target.equals(cid)){if(event.status == 1){inCombat = true}else inCombat = false}})
-dispatch.hook('S_MOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = true })
-dispatch.hook('S_UNMOUNT_VEHICLE', 2, event => { if(event.gameId.equals(cid)) onMount = false })
-
 //cStartSkill hook instant mount function for flying mounts
-dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
-if(!enabled || inCombat || !mounts.includes(event.skill.id) || customMount < 1 || customMount > 275 || grounds.includes(customMount)) return
-dispatch.toClient('S_MOUNT_VEHICLE', 2, {
-gameId: cid,
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
+if(!enabled || g.me.inCombat || g.contract.active || !mounts.includes(e.skill.id) || customMount < 1 || customMount > 275 || grounds.includes(customMount)) return
+d.send('S_MOUNT_VEHICLE', 2, {
+gameId: g.me.gameId,
 id: customMount,
 skill: 12200016,
 unk: false
-})
-dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+}),
+d.send('S_SHORTCUT_CHANGE', 1, {
 huntingZoneId: 7031,
 id: 300001,
 enable: true
@@ -86,31 +81,31 @@ enable: true
 })
 
 //cStartSkill hook instant mount function for ground mounts
-dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
-if(!enabled || inCombat || !mounts.includes(event.skill.id) || customMount < 1 || customMount > 275 || !grounds.includes(customMount)) return
-dispatch.toClient('S_MOUNT_VEHICLE', 2, {
-gameId: cid,
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
+if(!enabled || g.me.inCombat || g.contract.active || !mounts.includes(e.skill.id) || customMount < 1 || customMount > 275 || !grounds.includes(customMount)) return
+d.send('S_MOUNT_VEHICLE', 2, {
+gameId: g.me.gameId,
 id: customMount,
 skill: 12200016,
 unk: false
 })
-dispatch.hookOnce('S_SHORTCUT_CHANGE', 1, (event) => {
-event.enable = false
+d.hookOnce('S_SHORTCUT_CHANGE', 1, (e) => {
+e.enable = false
 return true
 })
 })
 
 //cStartSkill hook instant unmount function
-dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
-if(!enabled || !onMount || event.skill.id === 65000002 || event.skill.id === 65000001) return;
-else if(mounts.includes(event.skill.id)){
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
+if(!enabled || !onMount || g.contract.active || e.skill.id === 65000002 || e.skill.id === 65000001) return;
+else if(mounts.includes(e.skill.id)){
 
-dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
-gameId: cid,
+d.send('S_UNMOUNT_VEHICLE', 2, {
+gameId: g.me.gameId,
 skill: 12200016
 })
 
-dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+d.send('S_SHORTCUT_CHANGE', 1, {
 huntingZoneId: 7031,
 id: 300001,
 enable: false
@@ -119,16 +114,16 @@ enable: false
 })
 
 //cStartSkill hook for flying mount dismount
-dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
-if(!enabled || !onMount || event.skill.id === 65000002) return;
-else if(event.skill.id === 65000001){
-dispatch.toServer('C_UNMOUNT_VEHICLE', 1, {
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
+if(!enabled || !onMount || e.skill.id === 65000002) return;
+else if(e.skill.id === 65000001){
+d.send('C_UNMOUNT_VEHICLE', 1, {
 })
-dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
-gameId: cid,
+d.send('S_UNMOUNT_VEHICLE', 2, {
+gameId: g.me.gameId,
 skill: 12200016
 })
-dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+d.send('S_SHORTCUT_CHANGE', 1, {
 huntingZoneId: 7031,
 id: 300001,
 enable: false
@@ -137,21 +132,21 @@ enable: false
 })
 
 //instant C...
-dispatch.hook('C_START_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 7 : 6, (event) => {
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
 if(!enabled) return
-else if(event.skill.id === 65000002){
-dispatch.toClient('S_START_CLIENT_CUSTOM_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 3 : 2, {
+else if(e.skill.id === 65000002){
+d.send('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 3 : 2, {
 skill: 65000002
 })
-dispatch.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (dispatch.base.majorPatchVersion >= 74) ? 3 : 2, (event) => {return false})
+d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 3 : 2, (e) => {return false})
 }
 })
 
 //fix for teleporting while on a flying mount (im retarded and forgot a gameId check...)
-dispatch.hook('S_UNMOUNT_VEHICLE', 2, (event) => {
+d.hook('S_UNMOUNT_VEHICLE', 2, (e) => {
 if(!enabled) return
-else if(event.gameId.equals(cid)){
-dispatch.toClient('S_SHORTCUT_CHANGE', 1, {
+else if(g.me.is(e.gameId)){
+d.send('S_SHORTCUT_CHANGE', 1, {
 huntingZoneId: 7031,
 id: 300001,
 enable: false
@@ -159,12 +154,25 @@ enable: false
 }
 })
 
+d.hook('S_MOUNT_VEHICLE', 2, (e) => {
+if(!enabled) return
+else if(g.me.is(e.gameId)){
+g.contract.active = false
+}
+})
+
 //sSystemMessage to instantly unmount in unmountable zones
-dispatch.hook('S_SYSTEM_MESSAGE', 1, (event) => {
-if(event.message.includes('@1007') || event.message.includes('@36') || event.message.includes('@3880'))
-dispatch.toClient('S_UNMOUNT_VEHICLE', 2, {
-gameId: cid,
+d.hook('S_SYSTEM_MESSAGE', 1, (e) => {
+if(e.message.includes('@1007') || e.message.includes('@36') || e.message.includes('@3880'))
+d.send('S_UNMOUNT_VEHICLE', 2, {
+gameId: g.me.gameId,
 skill: 12200016
 })
 })
+
+//temp hooks that will be replaced with game state once im not retarded
+	d.hook('S_MOUNT_VEHICLE', 2, e => { if(g.me.is(e.gameId)) onMount = true })
+	d.hook('S_UNMOUNT_VEHICLE', 2, e => { if(g.me.is(e.gameId)) onMount = false })
+    //setInterval(() => { console.log('stuff: ' + stuff); }, 1000); //(seems like a nice place to keep it ¯\_(ツ)_/¯)
+
 }

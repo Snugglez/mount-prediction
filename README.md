@@ -4,6 +4,11 @@ Removes ping tax related to mounts such as `skill -> mount` and `unmount -> skil
 
 Also acts as a way to change your mount client side
 
+# Requirements
+[tera-game-state](https://github.com/hackerman-caali/tera-game-state) (if you are using [caali's](https://discord.gg/maqBmJV) proxy you already have this by default!)
+
+If you still have problems, make sure the folder is called `tera-game-state` and not `tera-game-state-master`
+
 # Commands
 Note, if using the commands in the proxy channel or `/8`, ignore the `!` prefix
 
