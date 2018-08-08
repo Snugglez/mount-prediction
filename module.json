@@ -1,4 +1,6 @@
 {
-    "servers": ["https://raw.githubusercontent.com/Snugglez/mount-prediction/master/"],
-    "supportUrl": ""
+	"disableAutoUpdate": false,
+    "options": {"niceName": "MP"},
+	"servers": ["https://raw.githubusercontent.com/Snugglez/mount-prediction/master/"],
+	"supportUrl": "https://github.com/Snugglez/mount-prediction/blob/master/README.md"
 }

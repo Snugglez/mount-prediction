@@ -1,20 +1,26 @@
 {
-"defs": {
-"S_LOGIN": 10,
-"C_START_SKILL": [6, 7],
-"S_USER_STATUS": 1,
-"S_MOUNT_VEHICLE": 2,
-"S_SYSTEM_MESSAGE": 1,
-"S_UNMOUNT_VEHICLE": 2,
-"S_SHORTCUT_CHANGE": 2,
-"S_START_CLIENT_CUSTOM_SKILL": [2, 3]
-},
-  "files": {
-    "groundlist.json": "7c542198c33cbd8db39c67aaa7789f420cfbc92ee1e7a0115897241a8ad14a18",
-    "index.js": "29e3566583b0a6d453612a20747a2075f66742333749c36e4b2ed2102252bb38",
-    "module.json": "ff5263c2cc3a5fc5bcc6da9beae0636b6eb10f328c8a0f97ad9705bbc06b69fb",
-    "mount.json": {"overwrite": false, "hash": "e888a676e1926d0c08b5f11fb9116df58b62604b05846f39f8d6fc4dd0ba31f1"},
-    "mountlist.json": "1569dd5feda0fca517374f18b75985e9d2d301a8779b37c412fe06492c17363f",
-    "README.md": "4e1a200e7b1ea058dca5e7b4ec1ba4814a6f96b8554da104ce79a438c2b8ca96"
-  }
+	"files": {
+		"README.md": "4682c3fe2793070268033098b73b275f529893fd5c8d6891ec9985432b0b1428",
+		"config.json": {"overwrite": false, "hash": "d0677d5f8b040133ec4fefed7de228eedcdfcc273f7bddd03b574729c274f384"},
+		"groundlist.json": "ba14dc1cc920d561025407e1fec692d033aceda82e901b300b3d6cf82e634a66",
+		"index.js": "9089e183aa5b13442e768420393cd79d4fcb8f20d7cad3098ae49589f0d838f6",
+		"module.json": "7038089f71928fbcd3451395a1c827850c5dc5e78987190958fa76c2756d88e0",
+		"mount.json": {"overwrite": false, "hash": "e888a676e1926d0c08b5f11fb9116df58b62604b05846f39f8d6fc4dd0ba31f1"},
+		"mountlist.json": "dd4d689b795646f56e94a80c2d6b621d94e940a13ccf7504244858bc4c9915aa"
+	},
+	"defs": {
+		"S_START_CLIENT_CUSTOM_SKILL": [2, 3],
+		"S_SHORTCUT_CHANGE": [1, 2],
+		"S_REQUEST_CONTRACT": 1,
+		"S_CANCEL_CONTRACT": 1,
+		"S_ACCEPT_CONTRACT": 1,
+		"C_UNMOUNT_VEHICLE": 1,
+		"S_REJECT_CONTRACT": 1,
+		"S_UNMOUNT_VEHICLE": 2,
+		"S_SYSTEM_MESSAGE": 1,
+		"C_START_SKILL": [6, 7],
+		"S_MOUNT_VEHICLE": 2,
+		"S_USER_STATUS": 1,
+		"S_LOGIN": 10
+	}
 }

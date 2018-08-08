@@ -1,15 +1,17 @@
 const 	Command = require('command'),
+		config = require('./config.json'),
 		GameState = require('tera-game-state'),
 		path = require('path'),
 		fs = require('fs')
 module.exports = function mountpredict(d) {
 const 	c = Command(d),
 		g = GameState(d);
-g.initialize(["me", "contract"]);
 
-let enabled = true,
+let enabled = config.enabled,
+	sudo = config.sudo,
 	onMount = null,
 	customMount = 0,
+	incontract = null,
 	mounts = require('./mountlist.json'),
 	grounds = require('./groundlist.json')
 
@@ -47,6 +49,10 @@ enable: false
 d.send('C_UNMOUNT_VEHICLE', 1, {
 })
 break;
+case "sudo":
+sudo = !sudo
+c.message(`sudo is now ${sudo ? 'enabled' : 'disabled'}.`)
+break;
 }})
 	
 //custom mount copy/paste fiesta 
@@ -66,7 +72,7 @@ fs.writeFileSync(path.join(__dirname, 'mount.json'), JSON.stringify(customMount)
 
 //cStartSkill hook instant mount function for flying mounts
 d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
-if(!enabled || g.me.inCombat || g.contract.active || !mounts.includes(e.skill.id) || customMount < 1 || customMount > 275 || grounds.includes(customMount)) return
+if(!enabled || g.me.inCombat || incontract || !mounts.includes(e.skill.id) || customMount < 1 || customMount > 293 || grounds.includes(customMount)) return
 d.send('S_MOUNT_VEHICLE', 2, {
 gameId: g.me.gameId,
 id: customMount,
@@ -82,22 +88,21 @@ enable: true
 
 //cStartSkill hook instant mount function for ground mounts
 d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
-if(!enabled || g.me.inCombat || g.contract.active || !mounts.includes(e.skill.id) || customMount < 1 || customMount > 275 || !grounds.includes(customMount)) return
+if(!enabled || g.me.inCombat || incontract || !mounts.includes(e.skill.id) || customMount < 1 || customMount > 293 || !grounds.includes(customMount)) return
 d.send('S_MOUNT_VEHICLE', 2, {
 gameId: g.me.gameId,
 id: customMount,
 skill: 12200016,
 unk: false
-})
+}),
 d.hookOnce('S_SHORTCUT_CHANGE', 1, (e) => {
-e.enable = false
-return true
+return false
 })
 })
 
 //cStartSkill hook instant unmount function
 d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
-if(!enabled || !onMount || g.contract.active || e.skill.id === 65000002 || e.skill.id === 65000001) return;
+if(!enabled || !onMount || incontract || e.skill.id === 65000002 || e.skill.id === 65000001) return;
 else if(mounts.includes(e.skill.id)){
 
 d.send('S_UNMOUNT_VEHICLE', 2, {
@@ -135,10 +140,10 @@ enable: false
 d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
 if(!enabled) return
 else if(e.skill.id === 65000002){
-d.send('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 3 : 2, {
+d.send('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 2 : 2, {
 skill: 65000002
 })
-d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 3 : 2, (e) => {return false})
+d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 2 : 2, (e) => {return false})
 }
 })
 
@@ -155,10 +160,11 @@ enable: false
 })
 
 d.hook('S_MOUNT_VEHICLE', 2, (e) => {
-if(!enabled) return
-else if(g.me.is(e.gameId)){
-g.contract.active = false
-}
+if(!enabled) return;
+if(g.me.is(e.gameId))
+incontract = false
+if(sudo){
+customMount = e.id}
 })
 
 //sSystemMessage to instantly unmount in unmountable zones
@@ -173,6 +179,10 @@ skill: 12200016
 //temp hooks that will be replaced with game state once im not retarded
 	d.hook('S_MOUNT_VEHICLE', 2, e => { if(g.me.is(e.gameId)) onMount = true })
 	d.hook('S_UNMOUNT_VEHICLE', 2, e => { if(g.me.is(e.gameId)) onMount = false })
-    //setInterval(() => { console.log('stuff: ' + stuff); }, 1000); //(seems like a nice place to keep it ¯\_(ツ)_/¯)
+	d.hook('S_REQUEST_CONTRACT', 1, event => { incontract = true })
+	d.hook('S_ACCEPT_CONTRACT', 1, event => { incontract = false })
+	d.hook('S_REJECT_CONTRACT', 1, event => { incontract = false })
+	d.hook('S_CANCEL_CONTRACT', 1, event => { incontract = false })
+    //setInterval(() => { console.log('stuff: ' + stuff); }, 2000); //(seems like a nice place to keep it ¯\_(ツ)_/¯)
 
 }
