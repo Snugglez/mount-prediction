@@ -163,7 +163,7 @@ d.hook('S_MOUNT_VEHICLE', 2, (e) => {
 if(!enabled) return;
 if(g.me.is(e.gameId))
 incontract = false
-if(sudo){
+if(sudo && g.me.is(e.gameId)){
 customMount = e.id}
 })
 
@@ -183,6 +183,6 @@ skill: 12200016
 	d.hook('S_ACCEPT_CONTRACT', 1, event => { incontract = false })
 	d.hook('S_REJECT_CONTRACT', 1, event => { incontract = false })
 	d.hook('S_CANCEL_CONTRACT', 1, event => { incontract = false })
-    //setInterval(() => { console.log('stuff: ' + stuff); }, 2000); //(seems like a nice place to keep it ¯\_(ツ)_/¯)
+    //setInterval(() => { console.log('stuff: ' + stuff); }, 1000); //(seems like a nice place to keep it ¯\_(ツ)_/¯)
 
 }
