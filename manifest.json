@@ -1,20 +1,17 @@
 {
 	"files": {
-		"README.md": "4682c3fe2793070268033098b73b275f529893fd5c8d6891ec9985432b0b1428",
+		"README.md": "b26f8fe2c5f99b471efb3c7ff233d9a14326b37d88ee3e97fe8a223d59987faa",
 		"config.json": {
 			"overwrite": false,
-			"hash": "d0677d5f8b040133ec4fefed7de228eedcdfcc273f7bddd03b574729c274f384"
+			"hash": "a2eb64a0c735e185203e2c4356d4df771a9c0ccca0ad654cb119cc8d891bb997"
 		},
 		"groundlist.json": "ba14dc1cc920d561025407e1fec692d033aceda82e901b300b3d6cf82e634a66",
-		"index.js": "e5b9608e08fb2180da720e7288b437c99ce8240cef8578c920d1b8fef9817af4",
+		"index.js": "1063d37c6ab305c50338f481139ff5f420987e995af03e69ec89b3042255c3ca",
 		"module.json": "7038089f71928fbcd3451395a1c827850c5dc5e78987190958fa76c2756d88e0",
-		"mount.json": {
-			"overwrite": false,
-			"hash": "e888a676e1926d0c08b5f11fb9116df58b62604b05846f39f8d6fc4dd0ba31f1"
-		},
-		"mountlist.json": "dd4d689b795646f56e94a80c2d6b621d94e940a13ccf7504244858bc4c9915aa"
+		"mountlist.json": "2b3ccc3c517644058aa35809616a400a5f7f8c4ac41456837d578a4d2a1c07f9"
 	},
 	"defs": {
+		"C_BIND_ITEM_EXECUTE": 1,
 		"C_START_SKILL": [
 			6,
 			7
@@ -22,6 +19,8 @@
 		"C_UNMOUNT_VEHICLE": 1,
 		"S_ACCEPT_CONTRACT": 1,
 		"S_CANCEL_CONTRACT": 1,
+		"S_GACHA_END": 1,
+		"S_LOAD_TOPO": 3,
 		"S_LOGIN": 10,
 		"S_MOUNT_VEHICLE": 2,
 		"S_REJECT_CONTRACT": 1,
