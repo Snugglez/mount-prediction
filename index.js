@@ -30,7 +30,7 @@ d.send('S_UNMOUNT_VEHICLE', 2, {
 gameId: d.game.me.gameId,
 skill: skilldb
 })
-d.send('S_SHORTCUT_CHANGE', 1, {
+d.send('S_SHORTCUT_CHANGE', 2, {
 huntingZoneId: 7031,
 id: 300001,
 enable: false
@@ -50,7 +50,7 @@ d.command.message("--Dismounts you incase something bugs out and you can't")
 })
 
 //cStartSkill hook instant mount function
-d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 7, (e) => {
 if (!enabled || d.game.me.inCombat || incontract || !mounts[e.skill.id]) return
 skilldb = e.skill.id
 d.send('S_MOUNT_VEHICLE', 2, {
@@ -60,14 +60,14 @@ skill: skilldb,
 unk: false
 })
 if (grounds.includes(mounts[skilldb])) {
-d.hookOnce('S_SHORTCUT_CHANGE', 1, (e) => {
+d.hookOnce('S_SHORTCUT_CHANGE', 2, (e) => {
 return false
 })
 }
 })
 
 //cStartSkill hook instant unmount function
-d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 7, (e) => {
 if(!enabled || !onMount || incontract) return;
 else if(mounts[e.skill.id] || e.skill.id === 65000001){
 
@@ -75,7 +75,7 @@ d.send('S_UNMOUNT_VEHICLE', 2, {
 gameId: d.game.me.gameId,
 skill: skilldb
 })
-d.send('S_SHORTCUT_CHANGE', 1, {
+d.send('S_SHORTCUT_CHANGE', 2, {
 huntingZoneId: 7031,
 id: 300001,
 enable: false
@@ -84,13 +84,14 @@ enable: false
 })
 
 //instant dive
-d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 6, (e) => {
+d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 7, (e) => {
 if(!enabled) return
 else if(e.skill.id === 65000002){
-d.send('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 2 : 2, {
+d.send('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 4 : 4, {
+gameId: d.game.me.gameId,
 skill: 65000002
 })
-d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 2 : 2, (e) => {return false})
+d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 4 : 4, (e) => {return false})
 }
 })
 
@@ -98,7 +99,7 @@ d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 2 :
 d.hook('S_UNMOUNT_VEHICLE', 2, (e) => {
 if(!enabled) return
 else if(d.game.me.is(e.gameId)){
-d.send('S_SHORTCUT_CHANGE', 1, {
+d.send('S_SHORTCUT_CHANGE', 2, {
 huntingZoneId: 7031,
 id: 300001,
 enable: false
