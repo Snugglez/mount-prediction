@@ -1,4 +1,4 @@
-		config = require('./config.json'),
+const	config = require('./config.json'),
 		path = require('path'),
 		fs = require('fs')
 module.exports = function mountpredict(d) {
