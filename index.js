@@ -116,7 +116,7 @@ incontract = false
 
 //sSystemMessage to instantly unmount in unmountable zones
 d.hook('S_SYSTEM_MESSAGE', 1, (e) => {
-if(e.message.includes('@1007') || e.message.includes('@36') || e.message.includes('@3880'))
+if(e.message.includes('@1007') || e.message.includes('@36') || e.message.includes('@3880') || e.message.includes('@3878'))
 d.send('S_UNMOUNT_VEHICLE', 2, {
 gameId: d.game.me.gameId,
 skill: 12200016
