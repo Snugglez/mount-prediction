@@ -50,7 +50,7 @@ d.command.message("--Dismounts you incase something bugs out and you can't")
 })
 
 //cStartSkill hook instant mount function
-d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 7, (e) => {
+d.hook('C_START_SKILL', (d.majorPatchVersion >= 74) ? 7 : 7, (e) => {
 if (!enabled || d.game.me.inCombat || incontract || !mounts[e.skill.id]) return
 skilldb = e.skill.id
 d.send('S_MOUNT_VEHICLE', 2, {
@@ -67,7 +67,7 @@ return false
 })
 
 //cStartSkill hook instant unmount function
-d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 7, (e) => {
+d.hook('C_START_SKILL', (d.majorPatchVersion >= 74) ? 7 : 7, (e) => {
 if(!enabled || !onMount || incontract) return;
 else if(mounts[e.skill.id] || e.skill.id === 65000001){
 
@@ -84,14 +84,14 @@ enable: false
 })
 
 //instant dive
-d.hook('C_START_SKILL', (d.base.majorPatchVersion >= 74) ? 7 : 7, (e) => {
+d.hook('C_START_SKILL', (d.majorPatchVersion >= 74) ? 7 : 7, (e) => {
 if(!enabled) return
 else if(e.skill.id === 65000002){
-d.send('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 4 : 4, {
+d.send('S_START_CLIENT_CUSTOM_SKILL', (d.majorPatchVersion >= 74) ? 4 : 4, {
 gameId: d.game.me.gameId,
 skill: 65000002
 })
-d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.base.majorPatchVersion >= 74) ? 4 : 4, (e) => {return false})
+d.hookOnce('S_START_CLIENT_CUSTOM_SKILL', (d.majorPatchVersion >= 74) ? 4 : 4, (e) => {return false})
 }
 })
 
