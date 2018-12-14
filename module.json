@@ -1,6 +1,10 @@
 {
 	"disableAutoUpdate": false,
     "options": {"niceName": "MP"},
+    "name": "Mount-Prediction",
+    "author": "Snug",
+    "description": "Removes ping tax related to mounts",
+    "version": "1.0",
 	"servers": ["https://raw.githubusercontent.com/Snugglez/mount-prediction/master/"],
 	"supportUrl": "https://github.com/Snugglez/mount-prediction/blob/master/README.md"
 }
