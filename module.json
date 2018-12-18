@@ -1,6 +1,6 @@
 {
 	"disableAutoUpdate": false,
-    "options": {"niceName": "MP"},
+    "options": {"niceName": "MP", "guiName": "Mount-Prediction"},
     "name": "Mount-Prediction",
     "author": "Snug",
     "description": "Removes ping tax related to mounts",
