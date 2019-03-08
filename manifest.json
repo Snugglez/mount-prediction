@@ -5,7 +5,7 @@
 			"overwrite": false,
 			"hash": "a2eb64a0c735e185203e2c4356d4df771a9c0ccca0ad654cb119cc8d891bb997"
 		},
-		"index.js": "fa04f7a627ba7113f42e41d1fd4f429d0c03bd911972a8d3db81ef1d5d873b05",
+		"index.js": "e04582e40e2ea7acac7807b711992f09e25a36cde79097f961e4077ab19a4d85",
 		"module.json": "1a05339b04bfb5b3dcdc3893ee0d133f6203869fd087ad4a6d441e1f1782b34d"
 	},
 	"defs": {
@@ -23,6 +23,7 @@
 		"S_SHORTCUT_CHANGE": 2,
 		"S_START_CLIENT_CUSTOM_SKILL": 4,
 		"S_SYSTEM_MESSAGE": 1,
-		"S_UNMOUNT_VEHICLE": 2
+		"S_UNMOUNT_VEHICLE": 2,
+		"S_USER_STATUS": 3
 	}
 }
