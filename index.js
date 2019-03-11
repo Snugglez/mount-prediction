@@ -72,9 +72,10 @@ enable: false
 })
 },2000)
 mountCheck = d.hook('S_MOUNT_VEHICLE', 2, (e) => {
-if(d.game.me.is(e.gameId))
+if(d.game.me.is(e.gameId)){
 clearTimeout(mountCheckTime)
 d.unhook(mountCheck)
+}
 })
 }
 else if(e.skill.id == mountSkill && onMount || e.skill.id == 65000001) {
@@ -97,9 +98,10 @@ unk: false
 })
 },2000)
 unmountCheck = d.hook('S_UNMOUNT_VEHICLE', 2, (e) => {
-if(d.game.me.is(e.gameId))
+if(d.game.me.is(e.gameId)){
 clearTimeout(unmountCheckTime)
 d.unhook(unmountCheck)
+}
 })
 }
 else if(e.skill.id == 65000002){
