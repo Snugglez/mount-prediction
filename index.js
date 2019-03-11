@@ -70,7 +70,7 @@ huntingZoneId: 7031,
 id: 300001,
 enable: false
 })
-},1000)
+},2000)
 mountCheck = d.hook('S_MOUNT_VEHICLE', 2, (e) => {
 if(d.game.me.is(e.gameId))
 clearTimeout(mountCheckTime)
@@ -95,7 +95,7 @@ id: mountId,
 skill: mountSkill,
 unk: false
 })
-},1000)
+},2000)
 unmountCheck = d.hook('S_UNMOUNT_VEHICLE', 2, (e) => {
 if(d.game.me.is(e.gameId))
 clearTimeout(unmountCheckTime)
