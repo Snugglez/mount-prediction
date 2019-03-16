@@ -65,11 +65,6 @@ d.send('S_UNMOUNT_VEHICLE', 2, {
 gameId: d.game.me.gameId,
 skill: mountSkill
 })
-d.send('S_SHORTCUT_CHANGE', 2, {
-huntingZoneId: 7031,
-id: 300001,
-enable: false
-})
 },2000)
 mountCheck = d.hook('S_MOUNT_VEHICLE', 2, (e) => {
 if(d.game.me.is(e.gameId)){
@@ -146,17 +141,12 @@ skill: 12200016
 
 //fix mounted while incombat if you mount and get put into combat before being mounted server side
 d.hook('S_USER_STATUS', 3, (e) => {
-if(d.game.me.is(e.gameId) && e.status == 1 && cMount){
+if(d.game.me.is(e.gameId) && e.status == 1 && cMount && enabled){
 cMount = false
 d.send('C_UNMOUNT_VEHICLE', 1, {})
 d.send('S_UNMOUNT_VEHICLE', 2, {
 gameId: d.game.me.gameId,
 skill: mountSkill
-})
-d.send('S_SHORTCUT_CHANGE', 2, {
-huntingZoneId: 7031,
-id: 300001,
-enable: false
 })
 }
 })
