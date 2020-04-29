@@ -154,10 +154,8 @@ skill: mountSkill
 //temp hooks that will be replaced with game state once im not retarded
 	d.hook('S_MOUNT_VEHICLE', 2, e => { if(d.game.me.is(e.gameId)) onMount = true })
 	d.hook('S_UNMOUNT_VEHICLE', 2, e => { if(d.game.me.is(e.gameId)) onMount = false })
-	d.hook('S_REQUEST_CONTRACT', 1, e => { incontract = true })
-	d.hook('S_ACCEPT_CONTRACT', 1, e => { incontract = false })
-	d.hook('S_REJECT_CONTRACT', 1, e => { incontract = false })
-	d.hook('S_CANCEL_CONTRACT', 1, e => { incontract = false })
-	d.hook('S_GACHA_END', 1, e => { incontract = false })
-	d.hook('C_BIND_ITEM_EXECUTE', 1, e => { incontract = false })
+	d.hook('S_REQUEST_CONTRACT', 'event', () => { incontract = true })
+	for(let packet of ['C_BIND_ITEM_EXECUTE','S_GACHA_END','S_CANCEL_CONTRACT','S_REJECT_CONTRACT','S_ACCEPT_CONTRACT'])
+	d.hook(packet, 'event', () => {incontract = false})
+
 }
