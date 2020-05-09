@@ -5,21 +5,13 @@
 			"overwrite": false,
 			"hash": "a2eb64a0c735e185203e2c4356d4df771a9c0ccca0ad654cb119cc8d891bb997"
 		},
-		"index.js": "78d5574ebfb781dbb4862a61e2b20a5225898d1142607589961f3f897a99eb0d",
-		"module.json": "1a05339b04bfb5b3dcdc3893ee0d133f6203869fd087ad4a6d441e1f1782b34d"
+		"index.js": "e56aa7949f17b7a355a4d226cefaf9ac5070df5014a595c83cf1305cca37d66a"
 	},
 	"defs": {
-		"C_BIND_ITEM_EXECUTE": 1,
 		"C_START_SKILL": 7,
 		"C_UNMOUNT_VEHICLE": 1,
-		"S_ACCEPT_CONTRACT": 1,
-		"S_CANCEL_CONTRACT": 1,
-		"S_GACHA_END": 1,
-		"S_LOAD_TOPO": 3,
-		"S_LOGIN": 10,
+		"C_USE_PREMIUM_SLOT": 1,
 		"S_MOUNT_VEHICLE": 2,
-		"S_REJECT_CONTRACT": 1,
-		"S_REQUEST_CONTRACT": 1,
 		"S_SHORTCUT_CHANGE": 2,
 		"S_START_CLIENT_CUSTOM_SKILL": 4,
 		"S_SYSTEM_MESSAGE": 1,
