@@ -101,7 +101,7 @@ module.exports = function mountpredict(d) {
 	d.hook('C_START_SKILL', 7, (e) => {
 		if (!enabled || d.game.me.inCombat || incontract) return
 		if (e.skill.id == mountSkill && !onMount) { fakeMount() }
-		else if (e.skill.id == mountSkill && onMount || e.skill.id == 65000001) { fakeUnMount() }
+		else if (e.skill.id == mountSkill && onMount || e.skill.id == 65000001) { fakeUnMount(); return false }
 		else if (e.skill.id == 65000002) {
 			d.send('S_START_CLIENT_CUSTOM_SKILL', 4, {
 				gameId: d.game.me.gameId,
