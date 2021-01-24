@@ -5,7 +5,8 @@
 			"overwrite": false,
 			"hash": "a2eb64a0c735e185203e2c4356d4df771a9c0ccca0ad654cb119cc8d891bb997"
 		},
-		"index.js": "5bfef8a676f73cfd1cf23d61416eb94806804c14ac1c3a24bb78eae2573e00c1"
+		"index.js": "5bfef8a676f73cfd1cf23d61416eb94806804c14ac1c3a24bb78eae2573e00c1",
+		"module.json": "9ecd6572c9ffb46859b2ae6606d4d58cad97a753fdc7fb8eeb4caa814e900a7d"
 	},
 	"defs": {
 		"C_START_SKILL": 7,

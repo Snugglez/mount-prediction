@@ -1,10 +1,19 @@
 {
-	"disableAutoUpdate": false,
-    "options": {"niceName": "MP", "guiName": "Mount-Prediction"},
+    "disableAutoUpdate": false,
+    "options": {
+        "guiName": "Mount-Prediction",
+        "cliName": "MP"
+    },
     "name": "Mount-Prediction",
     "author": "Snug",
+	"donationUrl": "https://play.google.com/store/apps/details?id=com.CarvedGames.SD",
     "description": "Removes ping tax related to mounts",
     "version": "1.1",
-	"servers": ["https://raw.githubusercontent.com/Snugglez/mount-prediction/master/"],
-	"supportUrl": "https://github.com/Snugglez/mount-prediction/blob/master/README.md"
+    "servers": [
+        "https://raw.githubusercontent.com/Snugglez/mount-prediction/master/"
+    ],
+    "supportUrl": "https://github.com/Snugglez/mount-prediction/blob/master/README.md",
+    "keywords": [
+        "network"
+    ]
 }
