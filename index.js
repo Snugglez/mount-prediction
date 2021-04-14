@@ -50,6 +50,7 @@ module.exports = function mountpredict(d) {
 
 	function fakeMount() {
 		cMount = true
+		clearTimeout(mountCheckTime)
 		d.send('S_MOUNT_VEHICLE', 2, {
 			gameId: d.game.me.gameId,
 			id: mountId,
@@ -72,6 +73,7 @@ module.exports = function mountpredict(d) {
 	function fakeUnMount() {
 		d.send('C_UNMOUNT_VEHICLE', 1, {})
 		cMount = false
+		clearTimeout(unmountCheckTime)
 		d.send('S_UNMOUNT_VEHICLE', 2, {
 			gameId: d.game.me.gameId,
 			skill: mountSkill
@@ -113,7 +115,7 @@ module.exports = function mountpredict(d) {
 	d.hook('C_USE_PREMIUM_SLOT', 1, (e) => {
 		if (!enabled || d.game.me.inCombat || incontract) return
 		if (e.id == mountSkill && !onMount) { fakeMount() }
-		else if (e.id == mountSkill && onMount) { fakeUnMount() }
+		else if (e.id == mountSkill && onMount) { fakeUnMount(); return false }
 	})
 
 	//fix for teleporting while on a flying mount
