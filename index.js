@@ -152,7 +152,7 @@ module.exports = function mountpredict(d) {
 	})
 
 	//fix mounted while incombat if you mount and get put into combat before being mounted server side
-	d.hook('S_USER_STATUS', 3, (e) => {
+	d.hook('S_USER_STATUS', 4, (e) => {
 		if (d.game.me.is(e.gameId) && e.status == 1 && cMount && enabled) {
 			cMount = false
 			d.send('C_UNMOUNT_VEHICLE', 1, {})

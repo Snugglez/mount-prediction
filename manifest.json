@@ -5,7 +5,7 @@
 			"overwrite": false,
 			"hash": "a2eb64a0c735e185203e2c4356d4df771a9c0ccca0ad654cb119cc8d891bb997"
 		},
-		"index.js": "fe79da008897f3bc2bbea52abcf2535a96df7490513a0f35f5019b9a4ffe8cf4",
+		"index.js": "91287f747de5587877d906efde73cd04a89a9f20084148c4b6ffb28b644d8862",
 		"module.json": "fe459906b32ca45e09284c8195cf74fd075d4ea515a8e2560a70241b31084f2f"
 	},
 	"defs": {
@@ -17,6 +17,6 @@
 		"S_START_CLIENT_CUSTOM_SKILL": 4,
 		"S_SYSTEM_MESSAGE": 1,
 		"S_UNMOUNT_VEHICLE": 2,
-		"S_USER_STATUS": 3
+		"S_USER_STATUS": [3,4]
 	}
 }
